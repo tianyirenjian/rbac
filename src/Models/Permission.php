@@ -9,7 +9,13 @@ use YaroslavMolchan\Rbac\Models\Role;
 
 class Permission extends Model
 {
-    protected $fillable = ['slug', 'name'];
+    protected $fillable = ['slug', 'name', 'site'];
+
+    public function __construct(array $attributes = [])
+    {
+        $this->connection = config('rbac.connection');
+        parent::__construct($attributes);
+    }
 
     public function roles() {
     	return $this->belongsToMany(Role::class);

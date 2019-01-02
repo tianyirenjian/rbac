@@ -12,6 +12,12 @@ class Role extends Model
 {
     protected $fillable = ['slug', 'name'];
 
+    public function __construct(array $attributes = [])
+    {
+        $this->connection = config('rbac.connection');
+        parent::__construct($attributes);
+    }
+
     public function getCacheKey() {
         return 'role_'.$this->slug;
     }

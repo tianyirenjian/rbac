@@ -18,6 +18,10 @@ class RbacServiceProvider extends ServiceProvider
             __DIR__ . '/database/migrations/' => base_path('/database/migrations')
         ], 'migrations');
 
+        $this->publishes([
+            __DIR__ . '/config/rbac.php' => config_path('rbac.php')
+        ], 'config');
+
         Blade::directive('ifUserIs', function($expression){
             return "<?php if(Auth::check() && Auth::user()->hasRole({$expression})): ?>";
         });
@@ -33,6 +37,9 @@ class RbacServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(
+            __DIR__ . '/config/rbac.php',
+            'rbac'
+        );
     }
 }
