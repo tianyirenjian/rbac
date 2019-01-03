@@ -30,7 +30,11 @@ class CheckPermission
         if ($this->auth->check() && $this->auth->user()->canDo($permission)) {
             return $next($request);
         }
-        return redirect('/');
-        // abort(403, 'You do not have permission');
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'You do not have permission'
+            ], 403);
+        }
+        abort(403, 'You do not have permission');
     }
 }
