@@ -2,6 +2,7 @@
 
 namespace YaroslavMolchan\Rbac\Models;
 
+use App\Models\Remote\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use YaroslavMolchan\Rbac\Models\Permission;
@@ -23,7 +24,7 @@ class Role extends Model
     }
 
     public function users() {
-    	return $this->belongsToMany(config('auth.providers.users.model'));
+    	return $this->belongsToMany(User::class);
     }
 
     public function permissions() {

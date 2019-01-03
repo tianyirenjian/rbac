@@ -45,12 +45,15 @@ trait Rbac
      */
     public function canDo($slug)
     {
+        return in_array($slug, $this->permissions());
+    }
+
+    public function permissions()
+    {
         $permissions = [];
         foreach ($this->roles as $role) {
             $permissions = array_merge($permissions, $role->permissionsArray());
         }
-        $permissions = array_unique($permissions);
-
-        return in_array($slug, $permissions);
+        return array_unique($permissions);
     }
 }
