@@ -29,7 +29,7 @@ class Permission extends Model
      * @param int|PermissionGroup $group
      */
     public function attachGroup($group) {
-        if (!($group instanceof PermissionGroup) && ctype_digit($group)) {
+        if (!($group instanceof PermissionGroup)) {
             $group = PermissionGroup::find($group);
         }
 
