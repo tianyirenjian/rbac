@@ -11,12 +11,22 @@ use YaroslavMolchan\Rbac\Helpers\CacheHelper;
 
 class Role extends Model
 {
-    protected $fillable = ['slug', 'name'];
+    protected $fillable = ['slug', 'name', 'description'];
 
     public function __construct(array $attributes = [])
     {
         $this->connection = config('rbac.connection');
         parent::__construct($attributes);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            if ($model->slug == '') {
+                $model->slug = str_random(12) . date('YmdHis');
+            }
+        });
     }
 
     public function getCacheKey() {
